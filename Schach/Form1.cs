@@ -12,6 +12,18 @@ namespace Schach
 {
     public partial class Form1 : Form
     {
+
+        private char[,] spielfeld = {
+            {'t','s','l','d','k','l','s','t'},
+            {'b','b','b','b','b','b','b','b'},
+            {' ',' ',' ',' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' ',' ',' ',' '},
+            {'B','B','B','B','B','B','B','B'},
+            {'T','S','L','D','K','L','S','T'},
+        };
+
         public Form1()
         {
             InitializeComponent();
@@ -25,7 +37,7 @@ namespace Schach
 
             int g = 80;
 
-
+            
 
             this.BackColor = Color.WhiteSmoke;
 
