@@ -31,7 +31,6 @@ namespace Schach
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //gespiegelt: lblZahl.Text= Convert.ToChar(49+y).ToString();
 
             int f = 8;
 
@@ -75,7 +74,8 @@ namespace Schach
                     feld.Size = new Size(g, g);
                     feld.Location = new Point(25 + x * g, 25 + y * g);
                     feld.BackColor = (y % 2 != 0)?((x % 2 == 0) ? Color.Black : Color.White): ((x % 2 == 0) ? Color.White : Color.Black);
-                    feld.BackgroundImage = Schach.Properties.Resources.sbauer;
+                    feld.BackgroundImage = this.getFigur(this.spielfeld[y, x]);
+                    feld.Click += Feld_Click;
                     feld.BackgroundImageLayout = ImageLayout.Center;
                     this.Controls.Add(feld);
                 }            
@@ -84,6 +84,58 @@ namespace Schach
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Text = "Schack";
+        }
+
+        private void Feld_Click(object sender, EventArgs e)
+        {
+            Panel p = (Panel) sender;
+            p.BackColor = Color.Orange;
+        }
+
+        private Image getFigur(char feldinhalt)
+        {
+            Image bild = null;
+            switch (feldinhalt)
+            {
+                case 't':
+                    bild = Schach.Properties.Resources.sturm;
+                    break;
+                case 'T':
+                    bild = Schach.Properties.Resources.wturm;
+                    break;
+                case 's':
+                    bild = Schach.Properties.Resources.sspringer;
+                    break;
+                case 'S':
+                    bild = Schach.Properties.Resources.wspringer;
+                    break;
+                case 'l':
+                    bild = Schach.Properties.Resources.slaeufer;
+                    break;
+                case 'L':
+                    bild = Schach.Properties.Resources.wlaeufer;
+                    break;
+                case 'b':
+                    bild = Schach.Properties.Resources.sbauer;
+                    break;
+                case 'B':
+                    bild = Schach.Properties.Resources.wbauer;
+                    break;
+                case 'k':
+                    bild = Schach.Properties.Resources.skoenig;
+                    break;
+                case 'K':
+                    bild = Schach.Properties.Resources.wkoenig;
+                    break;
+                case 'd':
+                    bild = Schach.Properties.Resources.sdame;
+                    break;
+                case 'D':
+                    bild = Schach.Properties.Resources.wdame;
+                    break;
+            }
+
+            return bild;
         }
     }
 }
