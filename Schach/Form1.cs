@@ -12,6 +12,10 @@ namespace Schach
 {
     public partial class Form1 : Form
     {
+        char figur = ' ';
+        Point start = new Point(-1, -1);
+        Point ziel = new Point(-1, -1);
+
 
         private char[,] spielfeld = {
             {'t','s','l','d','k','l','s','t'},
@@ -31,12 +35,9 @@ namespace Schach
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
             int f = 8;
 
             int g = 80;
-
-            
 
             this.BackColor = Color.WhiteSmoke;
 
@@ -77,19 +78,63 @@ namespace Schach
                     feld.BackgroundImage = this.getFigur(this.spielfeld[y, x]);
                     feld.Click += Feld_Click;
                     feld.BackgroundImageLayout = ImageLayout.Center;
+                    feld.Tag = new Point(x, y);
                     this.Controls.Add(feld);
                 }            
             }
             this.ClientSize = new Size(f*g+25*2, f*g+25*2);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Text = "Schack";
+            this.Text = "Schack Maat";
         }
 
         private void Feld_Click(object sender, EventArgs e)
         {
+            
             Panel p = (Panel) sender;
-            p.BackColor = Color.Orange;
+            Point pt = (Point)p.Tag;
+            if(figur == ' ')
+            {
+                if(spielfeld[pt.Y, pt.X] != ' ')
+                {
+                    start = pt;
+                    figur = spielfeld[pt.Y, pt.X];
+                    spielfeld[pt.Y, pt.X] = ' ';
+                    this.updateFeld(pt.X, pt.Y);
+                }
+                
+            }
+            else
+            {
+                spielfeld[pt.Y, pt.X] = figur;
+                figur = ' ';
+                this.updateFeld(pt.X, pt.Y);
+            }
+            
+            //Console.WriteLine(spielfeld[pt.Y, pt.X]);
+        }
+
+        private void updateFeld(int x, int y)
+        {
+            foreach (Control ctrl in this.Controls) 
+            {
+                if(ctrl.GetType() == typeof(Panel))
+                {
+                    Panel p = (Panel)ctrl;
+                    Point pt = (Point)p.Tag;
+                    if (pt.X == x && pt.Y == y)
+                    {
+                        p.BackColor = (x % 2 == 0 ^ y % 2 == 0) ? Color.Black : Color.White;
+                        p.BackgroundImage = this.getFigur(this.spielfeld[y, x]);
+                        return;
+                    }
+                }
+            }
+        }
+
+        private bool checkZug()
+        {
+            int quellex = 
         }
 
         private Image getFigur(char feldinhalt)
